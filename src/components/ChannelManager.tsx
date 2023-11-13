@@ -115,67 +115,6 @@ export default function ChannelManager() {
 
   const showPageLoader = isLoadingChannels || isLoadingHotels;
 
-  const columns2: TableColumn<{
-    id: string;
-    firstName: string;
-    lastName: string;
-    age: number;
-    occupation: string;
-  }>[] = [
-    {
-      id: "firstName",
-      title: "Girst Name",
-      align: "left",
-      isRowHeader: true,
-    },
-    {
-      id: "lastName",
-      title: "Last Name",
-      align: "left",
-      isRowHeader: true,
-    },
-    {
-      id: "age",
-      title: "Age",
-      align: "right",
-    },
-    {
-      id: "occupation",
-      title: "Occupation",
-      align: "left",
-    },
-  ];
-
-  const data1: {
-    id: string;
-    firstName: string;
-    lastName: string;
-    age: number;
-    occupation: string;
-  }[] = [
-    {
-      id: "1",
-      firstName: "Venla",
-      lastName: "Väärälä",
-      age: 28,
-      occupation: "IT Consultant",
-    },
-    {
-      id: "2",
-      firstName: "Johannes",
-      lastName: "Rantala",
-      age: 28,
-      occupation: "IT Consultant",
-    },
-    {
-      id: "3",
-      firstName: "Maarit",
-      lastName: "Väärälä",
-      age: 55,
-      occupation: "Palveluneuvoja",
-    },
-  ];
-
   return (
     <div>
       {showPageLoader && (
@@ -194,11 +133,13 @@ export default function ChannelManager() {
             onSelectionChange={setSelectedHotelID}
             selectedOptionId={selectedHotelID}
           />
-          <Table
-            data={channelTableRows}
-            columns={columns}
-            tableName="Hotel visibility list"
-          />
+          <div className="shadow rounded-lg">
+            <Table
+              data={channelTableRows}
+              columns={columns}
+              tableName="Hotel visibility list"
+            />
+          </div>
         </div>
       )}
     </div>
