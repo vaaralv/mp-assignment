@@ -35,16 +35,6 @@ function isLastElementInArray(index: number, array: any[]) {
   return index === array.length - 1;
 }
 
-function getCellPadding(index: number, array: any[]) {
-  if (isFirstElementInArray(index, array)) {
-    return "pl-3 pr-1.5";
-  }
-  if (isLastElementInArray(index, array)) {
-    return "pr-3 pr-1.5";
-  }
-  return "px-1.5";
-}
-
 function getHeaderCellRounding(index: number, array: any[]) {
   if (isFirstElementInArray(index, array)) {
     return "rounded-tl-lg";
@@ -67,10 +57,7 @@ export default function Table<T extends Record<string, string | number>>({
           minWidth={minWidth}
           key={`header-column-${id}`}
           isRowHeader={isRowHeader}
-          className={`${getAlignment(align)} ${getCellPadding(
-            i,
-            columns
-          )} ${getHeaderCellRounding(
+          className={`${getAlignment(align)} p-4 ${getHeaderCellRounding(
             i,
             columns
           )} py-3 bg-slate-50 border-b-outline-light border-solid text-sm`}
@@ -87,10 +74,9 @@ export default function Table<T extends Record<string, string | number>>({
     return columns.map(({ id, bodyCellComponent, align }, columnIndex) => (
       <Cell
         key={`cell-${rowID}-${id}`}
-        className={`${getAlignment(align)} ${getCellPadding(
-          columnIndex,
-          columns
-        )} py-3.5 text-sm focus:ring-2 focus:ring-btn-bg`}
+        className={`${getAlignment(
+          align
+        )} p-4 py-3.5 text-sm focus:ring-2 focus:ring-btn-bg`}
       >
         {bodyCellComponent ? (
           bodyCellComponent({
