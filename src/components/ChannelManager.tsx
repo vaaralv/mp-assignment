@@ -9,7 +9,7 @@ import {
   useGetHotelsQuery,
   useUpdateChannelMutation,
 } from "../store/api";
-import { BeatLoader } from "react-spinners";
+import { BeatLoader, GridLoader } from "react-spinners";
 
 interface ChannelTableRow {
   [k: string]: string | number;
@@ -59,7 +59,7 @@ export default function ChannelManager() {
     );
   }, [channels, selectedHotelID]);
 
-  function showLoadingSpinner(channelID: string) {
+  function showSwitchLoadingSpinner(channelID: string) {
     return isUpdating && channelID === channelToUpdate;
   }
 
@@ -100,7 +100,7 @@ export default function ChannelManager() {
           className="flex justify-end w-full h-[24px] items-center"
           onClick={() => handleVisibilityChange(props.rowID)}
         >
-          {showLoadingSpinner(props.rowID) ? (
+          {showSwitchLoadingSpinner(props.rowID) ? (
             <BeatLoader size={10} color="#c3d4e8" />
           ) : (
             <Switch
@@ -113,22 +113,34 @@ export default function ChannelManager() {
     },
   ];
 
+  const showPageLoader = isLoadingChannels || isLoadingHotels;
+
   return (
-    <div className="p-6 flex flex-col gap-y-5 max-w-[800px] min-w-[290px]">
+    <div>
+      {showPageLoader && (
+        <div
+          className="flex justify-center items-center mt-10"
+          aria-label="loading"
+        >
+          <GridLoader color="#0050ff" size={24} />
+        </div>
+      )}
       {hotels && channels && (
-        <>
-          <h1 className="text-2xl">Channel Manager</h1>
-          <Select
-            options={hotelListItems}
-            onSelectionChange={setSelectedHotelID}
-            selectedOptionId={selectedHotelID}
-          />
-          <Table
-            data={channelTableRows}
-            columns={columns}
-            tableName="Hotel visibility list"
-          />
-        </>
+        <div className="p-6 flex flex-col gap-y-5 max-w-[800px] min-w-[290px]">
+          <>
+            <h1 className="text-2xl">Channel Manager</h1>
+            <Select
+              options={hotelListItems}
+              onSelectionChange={setSelectedHotelID}
+              selectedOptionId={selectedHotelID}
+            />
+            <Table
+              data={channelTableRows}
+              columns={columns}
+              tableName="Hotel visibility list"
+            />
+          </>
+        </div>
       )}
     </div>
   );
